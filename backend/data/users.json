@@ -1,0 +1,544 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Admin User",
+      "email": "admin@shiv.local",
+      "password": "admin123",
+      "role": "Admin",
+      "position": "System Administrator",
+      "mobile_number": "",
+      "address": ""
+    },
+    {
+      "id": 2,
+      "name": "Amit Sales",
+      "email": "amit.sales@shiv.local",
+      "password": "sales123",
+      "role": "User",
+      "position": "Sales Manager",
+      "mobile_number": "",
+      "address": ""
+    },
+    {
+      "id": 3,
+      "name": "Neha Purchase",
+      "email": "neha.purchase@shiv.local",
+      "password": "purchase123",
+      "role": "User",
+      "position": "Purchase Executive",
+      "mobile_number": "",
+      "address": ""
+    },
+    {
+      "id": 4,
+      "name": "Ravi Manufacturing",
+      "email": "ravi.mfg@shiv.local",
+      "password": "mfg123",
+      "role": "User",
+      "position": "Manufacturing Supervisor",
+      "mobile_number": "",
+      "address": ""
+    },
+    {
+      "id": 5,
+      "name": "harhad",
+      "email": "harshya@gmail.com",
+      "password": "163411",
+      "role": "User",
+      "position": "New System User",
+      "mobile_number": "",
+      "address": ""
+    },
+    {
+      "id": 6,
+      "name": "manav",
+      "email": "manav@gmail.com",
+      "password": "163411",
+      "role": "User",
+      "position": "New System User",
+      "mobile_number": "",
+      "address": ""
+    },
+    {
+      "id": 7,
+      "name": "harshad",
+      "email": "harshyaad@gmail.com",
+      "password": "163411",
+      "role": "User",
+      "position": "New System User",
+      "mobile_number": "",
+      "address": ""
+    },
+    {
+      "id": 8,
+      "name": "jhkl",
+      "email": "hijkol@ghj.kk",
+      "password": "kkk",
+      "role": "User",
+      "position": "New System User",
+      "mobile_number": "",
+      "address": ""
+    },
+    {
+      "id": 9,
+      "name": "sales",
+      "email": "sales@sales",
+      "password": "sales",
+      "role": "User",
+      "position": "New System User",
+      "mobile_number": "",
+      "address": ""
+    }
+  ],
+  "permissions": [
+    {
+      "user_id": 2,
+      "module": "Sales",
+      "can_view": "Full",
+      "can_create": "Full",
+      "can_edit": "Full",
+      "can_delete": "Limited"
+    },
+    {
+      "user_id": 2,
+      "module": "Purchase",
+      "can_view": "None",
+      "can_create": "None",
+      "can_edit": "None",
+      "can_delete": "None"
+    },
+    {
+      "user_id": 2,
+      "module": "Manufacturing",
+      "can_view": "None",
+      "can_create": "None",
+      "can_edit": "None",
+      "can_delete": "None"
+    },
+    {
+      "user_id": 2,
+      "module": "Product",
+      "can_view": "Full",
+      "can_create": "Full",
+      "can_edit": "Full",
+      "can_delete": "Limited"
+    },
+    {
+      "user_id": 2,
+      "module": "BoM",
+      "can_view": "None",
+      "can_create": "None",
+      "can_edit": "None",
+      "can_delete": "None"
+    },
+    {
+      "user_id": 2,
+      "module": "Audit",
+      "can_view": "Full",
+      "can_create": "Full",
+      "can_edit": "Full",
+      "can_delete": "None"
+    },
+    {
+      "user_id": 2,
+      "module": "User",
+      "can_view": "None",
+      "can_create": "None",
+      "can_edit": "None",
+      "can_delete": "None"
+    },
+    {
+      "user_id": 3,
+      "module": "Sales",
+      "can_view": "None",
+      "can_create": "None",
+      "can_edit": "None",
+      "can_delete": "None"
+    },
+    {
+      "user_id": 3,
+      "module": "Purchase",
+      "can_view": "Full",
+      "can_create": "Full",
+      "can_edit": "Full",
+      "can_delete": "Limited"
+    },
+    {
+      "user_id": 3,
+      "module": "Manufacturing",
+      "can_view": "None",
+      "can_create": "None",
+      "can_edit": "None",
+      "can_delete": "None"
+    },
+    {
+      "user_id": 3,
+      "module": "Product",
+      "can_view": "Full",
+      "can_create": "Full",
+      "can_edit": "Full",
+      "can_delete": "Limited"
+    },
+    {
+      "user_id": 3,
+      "module": "BoM",
+      "can_view": "None",
+      "can_create": "None",
+      "can_edit": "None",
+      "can_delete": "None"
+    },
+    {
+      "user_id": 3,
+      "module": "Audit",
+      "can_view": "Full",
+      "can_create": "Full",
+      "can_edit": "Full",
+      "can_delete": "None"
+    },
+    {
+      "user_id": 3,
+      "module": "User",
+      "can_view": "None",
+      "can_create": "None",
+      "can_edit": "None",
+      "can_delete": "None"
+    },
+    {
+      "user_id": 4,
+      "module": "Sales",
+      "can_view": "None",
+      "can_create": "None",
+      "can_edit": "None",
+      "can_delete": "None"
+    },
+    {
+      "user_id": 4,
+      "module": "Purchase",
+      "can_view": "None",
+      "can_create": "None",
+      "can_edit": "None",
+      "can_delete": "None"
+    },
+    {
+      "user_id": 4,
+      "module": "Manufacturing",
+      "can_view": "Full",
+      "can_create": "Full",
+      "can_edit": "Full",
+      "can_delete": "Limited"
+    },
+    {
+      "user_id": 4,
+      "module": "Product",
+      "can_view": "Full",
+      "can_create": "Full",
+      "can_edit": "Full",
+      "can_delete": "Limited"
+    },
+    {
+      "user_id": 4,
+      "module": "BoM",
+      "can_view": "Full",
+      "can_create": "Full",
+      "can_edit": "Full",
+      "can_delete": "Limited"
+    },
+    {
+      "user_id": 4,
+      "module": "Audit",
+      "can_view": "Full",
+      "can_create": "Full",
+      "can_edit": "Full",
+      "can_delete": "None"
+    },
+    {
+      "user_id": 4,
+      "module": "User",
+      "can_view": "None",
+      "can_create": "None",
+      "can_edit": "None",
+      "can_delete": "None"
+    },
+    {
+      "user_id": 5,
+      "module": "Sales",
+      "can_view": "Full",
+      "can_create": "Full",
+      "can_edit": "Full",
+      "can_delete": "Limited"
+    },
+    {
+      "user_id": 5,
+      "module": "Purchase",
+      "can_view": "Full",
+      "can_create": "Full",
+      "can_edit": "Full",
+      "can_delete": "Limited"
+    },
+    {
+      "user_id": 5,
+      "module": "Manufacturing",
+      "can_view": "None",
+      "can_create": "None",
+      "can_edit": "None",
+      "can_delete": "None"
+    },
+    {
+      "user_id": 5,
+      "module": "Product",
+      "can_view": "Full",
+      "can_create": "Full",
+      "can_edit": "Full",
+      "can_delete": "Limited"
+    },
+    {
+      "user_id": 5,
+      "module": "BoM",
+      "can_view": "None",
+      "can_create": "None",
+      "can_edit": "None",
+      "can_delete": "None"
+    },
+    {
+      "user_id": 5,
+      "module": "Audit",
+      "can_view": "None",
+      "can_create": "None",
+      "can_edit": "None",
+      "can_delete": "None"
+    },
+    {
+      "user_id": 5,
+      "module": "User",
+      "can_view": "None",
+      "can_create": "None",
+      "can_edit": "None",
+      "can_delete": "None"
+    },
+    {
+      "user_id": 6,
+      "module": "Sales",
+      "can_view": "Full",
+      "can_create": "Full",
+      "can_edit": "Full",
+      "can_delete": "Limited"
+    },
+    {
+      "user_id": 6,
+      "module": "Purchase",
+      "can_view": "Full",
+      "can_create": "Full",
+      "can_edit": "Full",
+      "can_delete": "Limited"
+    },
+    {
+      "user_id": 6,
+      "module": "Manufacturing",
+      "can_view": "None",
+      "can_create": "None",
+      "can_edit": "None",
+      "can_delete": "None"
+    },
+    {
+      "user_id": 6,
+      "module": "Product",
+      "can_view": "Full",
+      "can_create": "Full",
+      "can_edit": "Full",
+      "can_delete": "Limited"
+    },
+    {
+      "user_id": 6,
+      "module": "BoM",
+      "can_view": "None",
+      "can_create": "None",
+      "can_edit": "None",
+      "can_delete": "None"
+    },
+    {
+      "user_id": 6,
+      "module": "Audit",
+      "can_view": "None",
+      "can_create": "None",
+      "can_edit": "None",
+      "can_delete": "None"
+    },
+    {
+      "user_id": 6,
+      "module": "User",
+      "can_view": "None",
+      "can_create": "None",
+      "can_edit": "None",
+      "can_delete": "None"
+    },
+    {
+      "user_id": 7,
+      "module": "Sales",
+      "can_view": "Full",
+      "can_create": "Full",
+      "can_edit": "Full",
+      "can_delete": "Limited"
+    },
+    {
+      "user_id": 7,
+      "module": "Purchase",
+      "can_view": "Full",
+      "can_create": "Full",
+      "can_edit": "Full",
+      "can_delete": "Limited"
+    },
+    {
+      "user_id": 7,
+      "module": "Manufacturing",
+      "can_view": "None",
+      "can_create": "None",
+      "can_edit": "None",
+      "can_delete": "None"
+    },
+    {
+      "user_id": 7,
+      "module": "Product",
+      "can_view": "Full",
+      "can_create": "Full",
+      "can_edit": "Full",
+      "can_delete": "Limited"
+    },
+    {
+      "user_id": 7,
+      "module": "BoM",
+      "can_view": "None",
+      "can_create": "None",
+      "can_edit": "None",
+      "can_delete": "None"
+    },
+    {
+      "user_id": 7,
+      "module": "Audit",
+      "can_view": "None",
+      "can_create": "None",
+      "can_edit": "None",
+      "can_delete": "None"
+    },
+    {
+      "user_id": 7,
+      "module": "User",
+      "can_view": "None",
+      "can_create": "None",
+      "can_edit": "None",
+      "can_delete": "None"
+    },
+    {
+      "user_id": 8,
+      "module": "Sales",
+      "can_view": "Full",
+      "can_create": "Full",
+      "can_edit": "Full",
+      "can_delete": "Limited"
+    },
+    {
+      "user_id": 8,
+      "module": "Purchase",
+      "can_view": "Full",
+      "can_create": "Full",
+      "can_edit": "Full",
+      "can_delete": "Limited"
+    },
+    {
+      "user_id": 8,
+      "module": "Manufacturing",
+      "can_view": "None",
+      "can_create": "None",
+      "can_edit": "None",
+      "can_delete": "None"
+    },
+    {
+      "user_id": 8,
+      "module": "Product",
+      "can_view": "Full",
+      "can_create": "Full",
+      "can_edit": "Full",
+      "can_delete": "Limited"
+    },
+    {
+      "user_id": 8,
+      "module": "BoM",
+      "can_view": "None",
+      "can_create": "None",
+      "can_edit": "None",
+      "can_delete": "None"
+    },
+    {
+      "user_id": 8,
+      "module": "Audit",
+      "can_view": "None",
+      "can_create": "None",
+      "can_edit": "None",
+      "can_delete": "None"
+    },
+    {
+      "user_id": 8,
+      "module": "User",
+      "can_view": "None",
+      "can_create": "None",
+      "can_edit": "None",
+      "can_delete": "None"
+    },
+    {
+      "user_id": 9,
+      "module": "Sales",
+      "can_view": "Full",
+      "can_create": "Full",
+      "can_edit": "Full",
+      "can_delete": "Limited"
+    },
+    {
+      "user_id": 9,
+      "module": "Purchase",
+      "can_view": "Full",
+      "can_create": "Full",
+      "can_edit": "Full",
+      "can_delete": "Limited"
+    },
+    {
+      "user_id": 9,
+      "module": "Manufacturing",
+      "can_view": "None",
+      "can_create": "None",
+      "can_edit": "None",
+      "can_delete": "None"
+    },
+    {
+      "user_id": 9,
+      "module": "Product",
+      "can_view": "Full",
+      "can_create": "Full",
+      "can_edit": "Full",
+      "can_delete": "Limited"
+    },
+    {
+      "user_id": 9,
+      "module": "BoM",
+      "can_view": "None",
+      "can_create": "None",
+      "can_edit": "None",
+      "can_delete": "None"
+    },
+    {
+      "user_id": 9,
+      "module": "Audit",
+      "can_view": "None",
+      "can_create": "None",
+      "can_edit": "None",
+      "can_delete": "None"
+    },
+    {
+      "user_id": 9,
+      "module": "User",
+      "can_view": "None",
+      "can_create": "None",
+      "can_edit": "None",
+      "can_delete": "None"
+    }
+  ]
+}
