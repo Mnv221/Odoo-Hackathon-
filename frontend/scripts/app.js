@@ -4,7 +4,9 @@ const state = {
   permissions: [],
   meta: { products: [], vendors: [], boms: [], users: [] },
   view: 'dashboard',
-  cache: {}
+  cache: {},
+  currentData: [],
+  currentViewType: 'list'
 };
 
 const views = [
@@ -229,6 +231,8 @@ function statusPanel(title, rows, statuses) {
 
 async function renderProducts(root) {
   const data = await api('/api/products');
+  state.currentData = data.products;
+  state.currentViewType = 'list';
   root.append(toolbar('Search products', 'productSearch'));
   root.append(el('section', { class: 'panel' }, [
     table(['Reference', 'Product', 'Sales', 'Cost', 'On Hand', 'Reserved', 'Free', 'Procurement', 'Actions'],
@@ -242,6 +246,8 @@ async function renderProducts(root) {
 
 async function renderBoms(root) {
   const data = await api('/api/boms');
+  state.currentData = data.boms;
+  state.currentViewType = 'list';
   root.append(toolbar('Search BoMs', 'bomSearch'));
   root.append(el('section', { class: 'panel' }, [
     table(['Reference', 'Finished Product', 'Quantity', 'Components', 'Operations', 'Actions'],
@@ -261,6 +267,8 @@ async function renderOrders(root, type) {
     manufacturing: { endpoint: '/api/manufacturing-orders', key: 'orders', module: 'Manufacturing', ref: 'ManufacturingOrder' }
   }[type];
   const data = await api(map.endpoint);
+  state.currentData = data.orders;
+  state.currentViewType = 'list';
   root.append(toolbar('Search reference, party, product', `${type}Search`, true));
   const headers = type === 'manufacturing'
     ? ['Reference', 'Product', 'Qty', 'Schedule', 'Assignee', 'Status', 'Actions']
@@ -620,10 +628,10 @@ function actions(items) {
 
 function toolbar(placeholder, id, withView = false) {
   return el('div', { class: 'toolbar' }, [
-    el('input', { id, placeholder }),
-    el('select', { html: '<option>All Statuses</option><option>Draft</option><option>Confirmed</option><option>Done</option>' }),
-    el('button', { class: 'secondary' }, ['Filter']),
-    el('button', { class: 'secondary' }, [withView ? 'Kanban' : 'List'])
+    el('input', { id, placeholder, oninput: () => applyFilter(id) }),
+    el('select', { id: `${id}Status`, onchange: () => applyFilter(id), html: '<option value="">All Statuses</option><option>Draft</option><option>Confirmed</option><option>Done</option><option>In Progress</option><option>Partially Delivered</option><option>Fully Delivered</option><option>Partially Received</option><option>Fully Received</option><option>Cancelled</option>' }),
+    el('button', { id: `${id}Filter`, class: 'secondary', onclick: () => applyFilter(id) }, ['Filter']),
+    el('button', { id: `${id}View`, class: 'secondary', onclick: withView ? () => toggleView(id) : null }, [withView ? 'Kanban' : 'List'])
   ]);
 }
 
@@ -678,6 +686,131 @@ function openModal(title, body) {
 
 function closeModal() {
   $('#modal').close();
+}
+
+function applyFilter(id) {
+  const searchInput = document.getElementById(id);
+  const statusSelect = document.getElementById(`${id}Status`);
+  const searchTerm = searchInput?.value?.toLowerCase() || '';
+  const statusFilter = statusSelect?.value || '';
+  
+  console.log('Filter called:', { id, searchTerm, statusFilter, dataLength: state.currentData.length });
+  
+  if (!state.currentData.length) {
+    toast('No data to filter', false);
+    return;
+  }
+  
+  const filtered = state.currentData.filter(item => {
+    let matchesSearch = !searchTerm;
+    
+    if (searchTerm) {
+      const searchFields = getSearchFields(state.view);
+      matchesSearch = searchFields.some(field => {
+        const value = item[field];
+        return value && String(value).toLowerCase().includes(searchTerm);
+      });
+    }
+    
+    const matchesStatus = !statusFilter || item.status === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
+  
+  console.log('Filtered results:', filtered.length);
+  toast(`Showing ${filtered.length} of ${state.currentData.length} records`, true);
+  renderFilteredData(filtered);
+}
+
+function getSearchFields(view) {
+  const fieldMap = {
+    products: ['reference', 'product_name'],
+    boms: ['reference', 'reference_note', 'finished_product_name'],
+    sales: ['reference', 'customer_name'],
+    purchase: ['reference', 'vendor_name'],
+    manufacturing: ['reference', 'finished_product_name']
+  };
+  return fieldMap[view] || ['reference'];
+}
+
+function toggleView(id) {
+  state.currentViewType = state.currentViewType === 'list' ? 'kanban' : 'list';
+  const viewBtn = document.getElementById(`${id}View`);
+  if (viewBtn) {
+    viewBtn.textContent = state.currentViewType === 'list' ? 'Kanban' : 'List';
+  }
+  applyFilter(id);
+}
+
+function renderFilteredData(data) {
+  const content = $('#content');
+  const panel = content.querySelector('.panel');
+  if (!panel) return;
+  
+  if (state.currentViewType === 'kanban') {
+    renderKanbanView(panel, data);
+  } else {
+    // Re-render the list view with filtered data
+    renderListView(panel, data);
+  }
+}
+
+function renderKanbanView(panel, data) {
+  const statuses = [...new Set(data.map(item => item.status).filter(Boolean))];
+  const kanbanContainer = el('div', { class: 'kanban-board' });
+  
+  statuses.forEach(status => {
+    const statusItems = data.filter(item => item.status === status);
+    const column = el('div', { class: 'kanban-column' }, [
+      el('h3', {}, [`${status} (${statusItems.length})`])
+    ]);
+    
+    statusItems.forEach(item => {
+      const card = el('div', { class: 'kanban-card' }, [
+        el('strong', {}, [item.reference || item.product_name || item.reference_note || 'Unknown']),
+        el('p', {}, [item.customer_name || item.vendor_name || item.finished_product_name || item.product_name || ''])
+      ]);
+      column.append(card);
+    });
+    
+    kanbanContainer.append(column);
+  });
+  
+  panel.innerHTML = '';
+  panel.append(kanbanContainer);
+}
+
+function renderListView(panel, data) {
+  const type = state.view;
+  let headers, rows;
+  
+  if (type === 'products') {
+    headers = ['Reference', 'Product', 'Sales', 'Cost', 'On Hand', 'Reserved', 'Free', 'Procurement', 'Actions'];
+    rows = data.map((p) => [
+      p.reference, p.product_name, money(p.sales_price), money(p.cost_price), qty(p.on_hand_qty), qty(p.reserved_qty), qty(p.free_to_use_qty),
+      p.procure_on_demand ? `${p.procurement_type}` : 'MTS',
+      actions([['Edit', () => productForm(p)], ['Logs', () => openLogs('Product', p.reference)]])
+    ]);
+  } else if (type === 'boms') {
+    headers = ['Reference', 'Finished Product', 'Quantity', 'Components', 'Operations', 'Actions'];
+    rows = data.map((b) => [
+      b.reference, b.finished_product_name, qty(b.quantity),
+      b.components.map((c) => `${c.component_name} x ${qty(c.to_consume_qty)}`).join(', '),
+      b.operations.map((o) => `${o.operation_name} ${qty(o.expected_duration)}m`).join(', '),
+      actions([['Edit', () => bomForm(b)], ['Logs', () => openLogs('BoM', b.reference)]])
+    ]);
+  } else if (['sales', 'purchase', 'manufacturing'].includes(type)) {
+    headers = type === 'manufacturing'
+      ? ['Reference', 'Product', 'Qty', 'Schedule', 'Assignee', 'Status', 'Actions']
+      : ['Reference', type === 'sales' ? 'Customer' : 'Vendor', 'Date', 'Owner', 'Status', 'Lines', 'Actions'];
+    rows = data.map((o) => type === 'manufacturing'
+      ? [o.reference, o.finished_product_name, qty(o.quantity), o.schedule_date || '', o.assignee_name || '', badge(o.status), orderActions(type, o)]
+      : [o.reference, type === 'sales' ? o.customer_name : o.vendor_name, o.creation_date, type === 'sales' ? o.sales_person_name : o.responsible_person_name, badge(o.status), lineSummary(o.lines), orderActions(type, o)]);
+  }
+  
+  if (headers && rows) {
+    panel.innerHTML = '';
+    panel.append(table(headers, rows));
+  }
 }
 
 boot();
